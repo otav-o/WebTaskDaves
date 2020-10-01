@@ -28,27 +28,21 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class UserRepoTest {
     
     @Autowired
-    UserRepo userDao;
+    UserRepo userRepo;
     
     UserClient user1, user2, user3;
     
     @BeforeEach
     public void init(){
-        System.out.println("Inserindo");
-        
+        System.out.println("Inserindo");        
         user1 = new UserClient(1l, "Teste", "11122233344" ,"user1@test", "1234", true, new ArrayList<>());
-        user2 = new UserClient(1l, "Teste2", "22233344455" ,"user2@test", "1234", true, new ArrayList<>());
-        user3 = new UserClient(1l, "Teste3", "33344455566" ,"user3@test", "1234", true, new ArrayList<>());
-        userDao.save(user1);
-        userDao.save(user2);
-        userDao.save(user3);
-        
+        userRepo.save(user1);        
     }
     
     @AfterEach
     public void clean(){
         System.out.println("apagando");
-        userDao.deleteAll();
+        userRepo.deleteAll();
     }
     
     @Test
@@ -56,12 +50,14 @@ public class UserRepoTest {
         //Cenário
         
         //Execução
-        String nomeEsperado = "Teste";
-        Optional<UserClient> usuarioBuscado = userDao.findByName("Teste");
+        String nomeEsperado = user1.getName();
+        Optional<UserClient> usuarioBuscado = userRepo.findByName(nomeEsperado);
         
-        //Teste
-        assertEquals(true, usuarioBuscado.isPresent());
-        
+        if (usuarioBuscado.isPresent()) {
+            assertEquals(nomeEsperado, usuarioBuscado.get().getName());
+        }else{
+            fail();
+        }        
     }
     
     @Test
@@ -69,11 +65,15 @@ public class UserRepoTest {
         //Cenário
         
         //Execução
-        String nomeEsperado = "Teste";
-        Optional<UserClient> usuarioBuscado = userDao.findByCpf("11122233344");
+        String cpfEsperado = user1.getCpf();
+        Optional<UserClient> usuarioBuscado = userRepo.findByCpf(cpfEsperado);
         
         //Teste
-        assertEquals(nomeEsperado, usuarioBuscado.get().getName());
+        if (usuarioBuscado.isPresent()) {
+            assertEquals(cpfEsperado, usuarioBuscado.get().getCpf());
+        }else{
+            fail();
+        }      
     }
    
 }
