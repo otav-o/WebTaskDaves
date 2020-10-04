@@ -63,71 +63,71 @@ public class TestaSiteTest {
 //        
 //    }
     
-//    @Test
-//    public void testeDeTelaNovaTarefaCompleta() throws InterruptedException{
-//        
-//        driver.get("http://localhost:"+porta);
-//        
-//        logar(); 
-//        //Entrando no menu
-//        driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[4]")).click();
-//        
-//        //Setando valores pra inserção
-//        driver.findElement(By.id("cpNome")).sendKeys("teste");
-//        driver.findElement(By.id("cpData")).sendKeys("03/10/2020");
-//        driver.findElement(By.cssSelector(".btn-primary")).click();
-//        
-//        Thread.sleep(1000l);
-//        //Verificação
-//        Assertions.assertEquals("Dados alterados com sucesso.", driver.findElement(By.cssSelector("strong")).getText());
-//        
-//        
-//    }
+    @Test
+    public void testeDeTelaNovaTarefaCompleta() throws InterruptedException{
+        
+        driver.get("http://localhost:"+porta);
+        
+        logar(); 
+        //Entrando no menu
+        driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[4]")).click();
+        
+        //Setando valores pra inserção
+        driver.findElement(By.id("cpNome")).sendKeys("teste");
+        driver.findElement(By.id("cpData")).sendKeys("03/10/2020");
+        driver.findElement(By.cssSelector(".btn-primary")).click();
+        
+        Thread.sleep(1000l);
+        //Verificação
+        Assertions.assertEquals("Dados alterados com sucesso.", driver.findElement(By.cssSelector("strong")).getText());
+        
+        
+    }
     
-//    @Test
-//    public void testaAoCriarTarefaSeAMesmaApareceNaLista(){
-//        driver.get("http://localhost:"+porta);
-//        
-//        logar(); 
-//        //Entrando no menu
-//        driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[4]")).click();
-//        
-//        //Setando valores pra inserção
-//        driver.findElement(By.id("cpNome")).sendKeys("teste");
-//        driver.findElement(By.id("cpData")).sendKeys("03/10/2020");
-//        driver.findElement(By.tagName("button")).click();
-//        
-//        //Entrando no menu de lista
-//         driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[5]")).click();
-//        //Setando valores pra inserção
-//        
-//        Assertions.assertEquals("teste", driver.findElement(By.xpath("//*[@id=\"listagem\"]/div/table/tbody/tr[1]/td[1]")).getText());
-//        
-//    }
-//    
-//    @Test
-//    public void testDeLoginLogout(){
-//        driver.get("http://localhost:"+porta);
-//        
-//        logar();
-//        
-//        //Saindo do sistema
-//        driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[6]")).click();
-//        
-//        try {
-//            //Tentando entrar com a nova senha
-//            driver.findElement(By.id("username")).sendKeys("123");
-//            driver.findElement(By.id("password")).sendKeys("123");
-//            driver.findElement(By.className("login100-form-btn")).click();
-//            //Localizar algum elemento da tela do sistema
-//            driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[2]")).click();
-//            Assertions.assertTrue(true);
-//        } catch (Exception e) {
-//            fail();
-//        }
-//        
-//    }
-//    
+    @Test
+    public void testaAoCriarTarefaSeAMesmaApareceNaLista(){
+        driver.get("http://localhost:"+porta);
+        
+        logar(); 
+        //Entrando no menu
+        driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[4]")).click();
+        
+        //Setando valores pra inserção
+        driver.findElement(By.id("cpNome")).sendKeys("teste");
+        driver.findElement(By.id("cpData")).sendKeys("03/10/2020");
+        driver.findElement(By.tagName("button")).click();
+        
+        //Entrando no menu de lista
+         driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[5]")).click();
+        //Setando valores pra inserção
+        
+        Assertions.assertEquals("teste", driver.findElement(By.xpath("//*[@id=\"listagem\"]/div/table/tbody/tr[1]/td[1]")).getText());
+        
+    }
+    
+    @Test
+    public void testDeLoginLogout(){
+        driver.get("http://localhost:"+porta);
+        
+        logar();
+        
+        //Saindo do sistema
+        driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[6]")).click();
+        
+        try {
+            //Tentando entrar com a nova senha
+            driver.findElement(By.id("username")).sendKeys("123");
+            driver.findElement(By.id("password")).sendKeys("123");
+            driver.findElement(By.className("login100-form-btn")).click();
+            //Localizar algum elemento da tela do sistema
+            driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[2]")).click();
+            Assertions.assertTrue(true);
+        } catch (Exception e) {
+            fail();
+        }
+        
+    }
+    
     @Test
     public void testeDeMudancaDeEmail() throws InterruptedException{
         driver.get("http://localhost:"+porta);
