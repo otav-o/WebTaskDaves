@@ -95,7 +95,7 @@ public class TestaSiteTest {
         //Setando valores pra inserção
         driver.findElement(By.id("cpNome")).sendKeys("teste");
         driver.findElement(By.id("cpData")).sendKeys("03/10/2020");
-        driver.findElement(By.tagName("button")).click();
+        driver.findElement(By.cssSelector(".btn-primary")).click();
         
         //Entrando no menu de lista
          driver.findElement(By.xpath("//*[@id=\"menu\"]/ul[3]/li[5]")).click();
