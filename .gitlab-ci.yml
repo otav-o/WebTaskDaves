@@ -4,7 +4,9 @@
 stages:
   - build
 
+# maven
 compilar:
   stage: build
   script:
     - java -version
+    - mvn -version
