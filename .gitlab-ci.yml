@@ -1,0 +1,10 @@
+
+
+# estágios
+stages:
+  - build
+
+compilar:
+  stage: build
+  script:
+    - java -version
