@@ -14,4 +14,4 @@ compilar:
     - ls -la
   script:
     - mvn clean package
-    - ls -la /target
+    - ls -la target
