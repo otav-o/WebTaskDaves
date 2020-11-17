@@ -6,6 +6,7 @@ stages:
 
 # maven
 compilar:
+  image: maven:3-jdk-8
   stage: build
   script:
     - java -version
