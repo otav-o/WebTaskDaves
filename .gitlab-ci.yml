@@ -23,8 +23,6 @@ nova_image:
   image: docker
   stage: image
   before_script:
-    - java -version
-    - mvn -version
     - cat /etc/*-release
     - ls -la
   script:
