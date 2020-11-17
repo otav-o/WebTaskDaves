@@ -1,4 +1,4 @@
-
+image: maven:3-jdk-8
 
 # estágios
 stages:
@@ -6,10 +6,12 @@ stages:
 
 # maven
 compilar:
-  image: maven:3-jdk-8
   stage: build
-  script:
+  before_script:
     - java -version
     - mvn -version
     - cat /etc/*-release
     - ls -la
+  script:
+    - mvn clean package
+    - ls -la /target
