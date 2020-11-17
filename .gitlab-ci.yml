@@ -13,5 +13,5 @@ compilar:
     - cat /etc/*-release
     - ls -la
   script:
-    - mvn clean package
+    - mvn clean package -DskipTests
     - ls -la target
