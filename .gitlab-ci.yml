@@ -4,9 +4,11 @@ image: maven
 stages:
   - build
 #  - Testes
+  - image
+
 
 # maven
-compilar:
+compilacao:
   stage: build
   before_script:
     - java -version
@@ -16,4 +18,18 @@ compilar:
   script:
     - mvn clean package -DskipTests
     - ls -la target
+
+nova_image:
+  image: docker
+  stage: image
+  before_script:
+    - java -version
+    - mvn -version
+    - cat /etc/*-release
+    - ls -la
+  script:
+    - docker version
+
+
+    
 
