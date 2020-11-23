@@ -26,7 +26,7 @@ nova_image:
     - cat /etc/*-release
     - ls -la
   script:
-    - docker version
+    - docker login registry.gitlab.com -u $GITLAB_USER -p $GITLAB_PASSWORD 
 
 
     
