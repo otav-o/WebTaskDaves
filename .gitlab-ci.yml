@@ -2,27 +2,27 @@ image: maven
 
 # estágios
 stages:
-  # - build
+  - build
 #  - Testes
   - image
 
 
 # maven
-# compilacao:
-#   stage: build
-#   cache:
-#     key: target-folder
-#     policy: push
-#     paths:
-#       - ./target
-#   before_script:
-#     - java -version
-#     - mvn -version
-#     - cat /etc/*-release
-#     - ls -la
-#   script:
-#     - mvn clean package -DskipTests
-#     - ls -la target
+compilacao:
+  stage: build
+  cache:
+    key: target-folder
+    policy: push
+    paths:
+      - ./target
+  before_script:
+    - java -version
+    - mvn -version
+    - cat /etc/*-release
+    - ls -la
+  script:
+    - mvn clean package -DskipTests
+    - ls -la target
 
 nova_image:
   image: docker
@@ -39,6 +39,7 @@ nova_image:
     - ls -la
   script:
     - docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_PASSWORD} 
+    - docker build -t registry.gitlab.com/aula2020/taskweb .
 
 
 
