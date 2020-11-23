@@ -2,31 +2,44 @@ image: maven
 
 # estágios
 stages:
-  - build
+  # - build
 #  - Testes
   - image
 
 
 # maven
-compilacao:
-  stage: build
-  before_script:
-    - java -version
-    - mvn -version
-    - cat /etc/*-release
-    - ls -la
-  script:
-    - mvn clean package -DskipTests
-    - ls -la target
+# compilacao:
+#   stage: build
+#   cache:
+#     key: target-folder
+#     policy: push
+#     paths:
+#       - ./target
+#   before_script:
+#     - java -version
+#     - mvn -version
+#     - cat /etc/*-release
+#     - ls -la
+#   script:
+#     - mvn clean package -DskipTests
+#     - ls -la target
 
 nova_image:
   image: docker
   stage: image
+  cache:
+    key: target-folder
+    policy: pull
+    paths:
+      - ./target
   before_script:
     - cat /etc/*-release
     - ls -la
   script:
-    - docker login registry.gitlab.com -u $GITLAB_USER -p $GITLAB_PASSWORD 
+    - docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_PASSWORD} 
+
+
+
 
 
     
