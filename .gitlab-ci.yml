@@ -40,6 +40,8 @@ nova_image:
   script:
     - docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_PASSWORD} 
     - docker build -t registry.gitlab.com/aula2020/taskweb .
+    - docker images
+    - docker push registry.gitlab.com/aula2020/taskweb
 
 
 
