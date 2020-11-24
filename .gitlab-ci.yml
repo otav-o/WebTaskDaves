@@ -2,47 +2,47 @@ image: maven
 
 # estágios
 stages:
-  - build
+  # - build
 #  - Testes
-  - image
+  # - image
   - deploy
 
 
-# maven
-compilacao:
-  stage: build
-  cache:
-    key: target-folder
-    policy: push
-    paths:
-      - ./target
-  before_script:
-    - java -version
-    - mvn -version
-    - cat /etc/*-release
-    - ls -la
-  script:
-    - mvn clean package -DskipTests
-    - ls -la target
+# # maven
+# compilacao:
+#   stage: build
+#   cache:
+#     key: target-folder
+#     policy: push
+#     paths:
+#       - ./target
+#   before_script:
+#     - java -version
+#     - mvn -version
+#     - cat /etc/*-release
+#     - ls -la
+#   script:
+#     - mvn clean package -DskipTests
+#     - ls -la target
 
-nova_image:
-  image: docker
-  stage: image
-  services:
-    - docker:dind
-  cache:
-    key: target-folder
-    policy: pull
-    paths:
-      - ./target
-  before_script:
-    - cat /etc/*-release
-    - ls -la
-  script:
-    - docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_PASSWORD} 
-    - docker build -t registry.gitlab.com/aula2020/taskweb .
-    - docker images
-    - docker push registry.gitlab.com/aula2020/taskweb
+# nova_image:
+#   image: docker
+#   stage: image
+#   services:
+#     - docker:dind
+#   cache:
+#     key: target-folder
+#     policy: pull
+#     paths:
+#       - ./target
+#   before_script:
+#     - cat /etc/*-release
+#     - ls -la
+#   script:
+#     - docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_PASSWORD} 
+#     - docker build -t registry.gitlab.com/aula2020/taskweb .
+#     - docker images
+#     - docker push registry.gitlab.com/aula2020/taskweb
 
 
 deploy_aws_homolog:
@@ -58,7 +58,7 @@ deploy_aws_homolog:
     - echo "${AWS_SSH_PRIVATE_KEY}" | ssh-add -
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    -  ssh ubuntu@prod-davesmartins.ddns.net docker run -d --name taskweb-homolg -p 80:80 registry.gitlab.com/aula2020/taskweb
+    -  ssh ubuntu@prod-davesmartins.ddns.net docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_PASSWORD} && docker run -d --name taskweb-homolg -p 80:80 registry.gitlab.com/aula2020/taskweb
 
 
 
