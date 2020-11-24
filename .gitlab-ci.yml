@@ -5,6 +5,7 @@ stages:
   - build
 #  - Testes
   - image
+  - deploy
 
 
 # maven
@@ -43,6 +44,21 @@ nova_image:
     - docker images
     - docker push registry.gitlab.com/aula2020/taskweb
 
+
+deploy_aws_homolog:
+  image: docker
+  stage: deploy
+  services:
+    - docker:dind
+  before_script:
+    - cat /etc/*-release
+    - ls -la
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh 
+    - eval $(ssh-agent -s)
+    - echo "${AWS_SSH_PRIVATE_KEY}" | ssh-add -
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    -  ssh ubuntu@prod-davesmartins.ddns.net docker run -d --name taskweb-homolg -p 80:80 registry.gitlab.com/aula2020/taskweb
 
 
 
