@@ -59,7 +59,7 @@ deploy_aws_homolog:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - ssh ubuntu@prod-davesmartins.ddns.net ls -la
-    - ssh ubuntu@prod-davesmartins.ddns.net "docker rm -f taskweb-homolg &&  docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_PASSWORD} && docker run -d -e SPRING_PROFILES_ACTIVE=homolog --name taskweb-homolg -p 80:80 registry.gitlab.com/aula2020/taskweb"
+    - ssh ubuntu@prod-davesmartins.ddns.net "docker rm -f taskweb-homolg &&  docker login registry.gitlab.com -u ${GITLAB_USER} -p ${GITLAB_PASSWORD} && docker run -d -e SPRING_PROFILES_ACTIVE=homolog --name taskweb-homolg -p 8080:80 registry.gitlab.com/aula2020/taskweb"
     
 
 
