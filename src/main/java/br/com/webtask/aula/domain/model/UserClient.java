@@ -60,4 +60,16 @@ public class UserClient {
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
 
+
+    boolean isEmailValid() {
+
+//         return email.contains("@") && !email.startsWith("@")
+//                 && !email.endsWith("@") && email.contains(".");
+
+            return email.matches("\\w+@\\w+\\.\\w+");
+        
+    }
+    
+    
+
 }

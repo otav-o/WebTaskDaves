@@ -1,79 +1,68 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.webtask.aula.domain.repo;
 
 import br.com.webtask.aula.domain.model.UserClient;
-import java.util.ArrayList;
-import java.util.Optional;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- * @author thiago
- */
-@ExtendWith(SpringExtension.class)
-@ActiveProfiles("test")
-@DataJpaTest
+import static org.junit.jupiter.api.Assertions.*;
+
+@DataJpaTest // indica que vai usar banco de dados
+@ActiveProfiles("test") // annotation com o mesmo nome do final do application-***.properties. Assim, vai usar o banco de teste
 public class UserRepoTest {
-    
+    public UserRepoTest() {}
+
     @Autowired
-    UserRepo userRepo;
-    
-    UserClient user1, user2, user3;
-    
-    @BeforeEach
-    public void init(){
-        System.out.println("Inserindo");        
-        user1 = new UserClient(1l, "Teste", "11122233344" ,"user1@test", "1234", true, new ArrayList<>());
-        userRepo.save(user1);        
+    private UserRepo userRepo;
+
+    private UserClient user1 = new UserClient(null, "Gustin", "321", "gu@gu", "123", true, null);
+    private UserClient user2 = new UserClient(null, "Pedrin", "555", "ped@ped", "123", true, null);
+
+
+    @BeforeAll
+    public static void setUpClass() {
     }
-    
+
+    @AfterAll
+    public static void tearDownClass() {
+    }
+
+    @BeforeEach
+    @Transactional // método que acessa banco de dados
+    public void setUp(){
+        userRepo.save(user1); // inserir esse usuário no banco de dados antes de cada teste
+        userRepo.save(user2);
+    }
+
     @AfterEach
-    public void clean(){
-        System.out.println("apagando");
+    public void tearDown() {
         userRepo.deleteAll();
     }
-    
+
     @Test
-    public void testaFuncaoFindByName(){
-        //Cenário
-        
-        //Execução
-        String nomeEsperado = user1.getName();
-        Optional<UserClient> usuarioBuscado = userRepo.findByName(nomeEsperado);
-        
-        if (usuarioBuscado.isPresent()) {
-            assertEquals(nomeEsperado, usuarioBuscado.get().getName());
-        }else{
-            fail();
-        }        
+    public void testSomeMethod() {
+        UserClient userEsperado = user1;
+        UserClient userObtido = userRepo.findByName("Gustin").get();
+        assertEquals(userEsperado, userObtido);
     }
-    
+
     @Test
-    public void testaFuncaoFindByCpf(){
-        //Cenário
-        
-        //Execução
-        String cpfEsperado = user1.getCpf();
-        Optional<UserClient> usuarioBuscado = userRepo.findByCpf(cpfEsperado);
-        
-        //Teste
-        if (usuarioBuscado.isPresent()) {
-            assertEquals(cpfEsperado, usuarioBuscado.get().getCpf());
-        }else{
-            fail();
-        }      
+    @Transactional
+    public void testaSaveNovoUser() {
+        UserClient user2 = new UserClient(null, "Gustin123", "333", "gu123@gu", "123", true, null);
+        userRepo.save(user2);
+
+        UserClient userObtido = userRepo.findByName("Gustin123").get();
+
+        assertEquals(user2, userObtido);
     }
-   
+
+    @Test
+    public void testBuscarTodos() {
+        long userEsperado = 2;
+        long userObtido = userRepo.count();
+        assertEquals(userEsperado, userObtido);
+    }
 }

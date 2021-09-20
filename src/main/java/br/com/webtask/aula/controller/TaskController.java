@@ -69,9 +69,17 @@ public class TaskController {
         if (result.hasErrors()) {
             return "task/newTask";
         }
+        
+        
+        if (!tarefa.isDescriptionValid()){
+           attr.addFlashAttribute("fail", "Descrição inválida!!!!");
+           return "redirect:/task"; 
+        }
+        
         tarefa.setUser( UserClient.builder().id( userLogado.getIdUserLogado(authentication) ).build() );
         tarefa.setFinishedDate(null);
         taskService.salvar(tarefa);
+        
         attr.addFlashAttribute("success", "Dados alterados com sucesso.");
         return "redirect:/home";
     }

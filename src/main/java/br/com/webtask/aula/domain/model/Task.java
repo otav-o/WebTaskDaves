@@ -69,6 +69,12 @@ public class Task {
             return EStatus.NOVO; 
         }
     }
+
+    public boolean isDescriptionValid() {
+    
+         return !taskDescription.contains(" ") && !taskDescription.matches(".*\\d{1}.*");
+    
+    }
     
     
 }

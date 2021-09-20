@@ -5,133 +5,145 @@
  */
 package br.com.webtask.aula.domain.model;
 
-import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 
 /**
  *
- * @author thiago
+ * @author daves
  */
 public class TaskTest {
     
-    Task tarefa;
-    UserClient user;
-    
-    @BeforeEach
-    public void init(){
-        tarefa = new Task();
-        tarefa.setId(1l);
-        tarefa.setTaskDescription("teste");
+    public TaskTest() {
+    }
+
+    //BDD
+    @Test
+    public void testSomeMethod() {
         
-        user = new UserClient();
-        tarefa.setUser(user);
+        //preparo o ambiente
+        int a = 1;
+        int b = 2;
+        
+        //executo a ação
+        int c = a+b;
+                
+        //verifico o resultado  c==3
+        assertEquals(3, c);
     }
     
     @Test
-    public void testeDeFlagDeTarefaFinalizadaQuandoEstaFinalizada(){
+    public void testSomeMethod2() {
         
-        //Cenario
-        tarefa.setPlannedDate(LocalDate.now().minusDays(1l));
-        tarefa.setFinishedDate(LocalDate.now());
+        //preparo o ambiente
+        int a = 1;
+        int b = 2;
         
-        //Execução
-        boolean resultado = tarefa.isFinish();
-        
-        //Resultado
-        assertTrue(resultado);
+        //executo a ação
+        int c = a*b;
+                
+        //verifico o resultado  c==3
+        assertEquals(2, c);
     }
     
     @Test
-    public void testeDeFlagDeTarefaFinalizadaQuandoNaoEstaFinalizada(){
-        //Cenario
-        tarefa.setPlannedDate(LocalDate.now().plusDays(1l));
-        tarefa.setFinishedDate(null);
+    public void testParaVerificarTaskValid() {
         
-        //Execução
-        boolean resultado = tarefa.isFinish();
+        //preparo o ambiente
+        Task t = new Task();
+        t.setTaskDescription("abc abc");
+        boolean esperado = false;
         
-        //Resultado
-        assertFalse(resultado);
+        //executo a ação
+        boolean resultado = t.isDescriptionValid();
+                
+        //verifico o resultado  c==3
+        assertEquals(esperado, resultado);
+    }
+    
+    
+    @Test
+    @DisplayName("testa se a tarefa está valida com espaço em branco no início")
+    public void testParaVerificarTaskValidEspecoNoInicio() {
+        
+        //preparo o ambiente
+        Task t = new Task();
+        t.setTaskDescription(" abcabc");
+        boolean esperado = false;
+        
+        //executo a ação
+        boolean resultado = t.isDescriptionValid();
+                
+        //verifico o resultado 
+        assertEquals(esperado, resultado);
+    }
+    
+    
+    @Test
+    @DisplayName("testa se a tarefa está valida contendo números")
+    public void testParaVerificarTaskValidComNumeros() {
+        
+        //preparo o ambiente
+        Task t = new Task();
+        t.setTaskDescription("abc123");
+        boolean esperado = false;
+        
+        //executo a ação
+        boolean resultado = t.isDescriptionValid();
+                
+        //verifico o resultado 
+        assertEquals(esperado, resultado);
     }
     
     @Test
-    public void testeDeFlagDeAtrasoQuandoTarefaEstaAtrasada(){
-        //Cenario
-        tarefa.setPlannedDate(LocalDate.now().minusDays(1l));
-        tarefa.setFinishedDate(null);
+    @DisplayName("testa se a tarefa está valida contendo números no início")
+    public void testParaVerificarTaskValidComNumerosNoInicio() {
         
-        //Execucao
-        boolean resultaddo = tarefa.isLate();
+        //preparo o ambiente
+        Task t = new Task();
+        t.setTaskDescription("111abc");
+        boolean esperado = false;
         
-        //Resultado
-        assertTrue(resultaddo);
+        //executo a ação
+        boolean resultado = t.isDescriptionValid();
+                
+        //verifico o resultado 
+        assertEquals(esperado, resultado);
     }
     
     @Test
-    public void testeDeFlagDeAtrasoQuandoNaoTarefaEstaAtrasada(){
-        //Cenario
-        tarefa.setPlannedDate(LocalDate.now().minusDays(1l));
-        tarefa.setFinishedDate(LocalDate.now());
+    @DisplayName("testa se a tarefa está valida contendo somente números")
+    public void testParaVerificarTaskValidSomenteNumeros() {
         
-        //Execucao
-        boolean resultaddo = tarefa.isLate();
+        //preparo o ambiente
+        Task t = new Task();
+        t.setTaskDescription("11");
+        boolean esperado = false;
         
-        //Resultado
-        assertTrue(resultaddo);
-    }
-    
-    @Test 
-    public void testeDeStatusTarefaConcluidaComAtraso(){
-        //Cenario
-        tarefa.setPlannedDate(LocalDate.now().minusDays(1l));
-        tarefa.setFinishedDate(LocalDate.now());
-        
-        //Execucao
-        EStatus status = tarefa.getStatus();
-        
-        //Verificacao
-        assertEquals(EStatus.CONCLUIDO_ATRASADO, status);
+        //executo a ação
+        boolean resultado = t.isDescriptionValid();
+                
+        //verifico o resultado 
+        assertEquals(esperado, resultado);
     }
     
     @Test
-    public void testeDeStatusTarefaConcluidaNoPrazo(){
-        //Cenario
-        tarefa.setPlannedDate(LocalDate.now());
-        tarefa.setFinishedDate(LocalDate.now().minusDays(1l));
+    @DisplayName("testa se a tarefa está valida")
+    public void testParaVerificarTaskCorreta() {
         
-        //Execução
-        EStatus status = tarefa.getStatus();
+        //preparo o ambiente
+        Task t = new Task();
+        t.setTaskDescription("abc");
+        boolean esperado = true;
         
-        //Verificacao
-        assertEquals(EStatus.CONCLUIDO_PRAZO, status);
+        //executo a ação
+        boolean resultado = t.isDescriptionValid();
+                
+        //verifico o resultado 
+        assertEquals(esperado, resultado);
     }
     
-    @Test
-    public void testeDeStatusTarefaNaoConcluidaEAtrasada(){
-        //Cenario
-        tarefa.setPlannedDate(LocalDate.now().minusDays(1));
-        tarefa.setFinishedDate(null);
-        
-        //Execução
-        EStatus status = tarefa.getStatus();
-        
-        //Verificacao
-        assertEquals(EStatus.ATRASADO, status);
-    }
     
-    @Test
-    public void testeDeStatusTareaNaoConcluidaENaoAtrasada(){
-        //Cenario
-        tarefa.setPlannedDate(LocalDate.now().plusDays(1));
-        tarefa.setFinishedDate(null);
-        
-        //Execução
-        EStatus status = tarefa.getStatus();
-        
-        //Verificacao
-        assertEquals(EStatus.NOVO, status);
-    }
+    
 }
