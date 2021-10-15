@@ -42,7 +42,7 @@ public class TaskController {
     }
     
     @GetMapping("/list")
-    public String listaTask(Authentication authentication,ModelMap model) {
+    public String listaTask(Authentication authentication,ModelMap model) throws Exception {
 
         model.addAttribute("lista", taskService.minhaLista( userLogado.getIdUserLogado(authentication) ));
         return "task/listTask";

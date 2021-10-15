@@ -2,6 +2,7 @@ package br.com.webtask.aula.domain.repo;
 
 import br.com.webtask.aula.domain.model.UserClient;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -44,6 +45,7 @@ public class UserRepoTest {
     @Test
     public void testSomeMethod() {
         UserClient userEsperado = user1;
+//        Mockito.when(userRepo.findByName("Gustin").get()).thenReturn(user1);
         UserClient userObtido = userRepo.findByName("Gustin").get();
         assertEquals(userEsperado, userObtido);
     }

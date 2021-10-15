@@ -65,7 +65,7 @@ public class TaskTest {
     
     @Test
     @DisplayName("testa se a tarefa está valida com espaço em branco no início")
-    public void testParaVerificarTaskValidEspecoNoInicio() {
+    public void testParaVerificarTaskValidEspacoNoInicio() {
         
         //preparo o ambiente
         Task t = new Task();
