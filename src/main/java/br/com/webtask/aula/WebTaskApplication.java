@@ -31,7 +31,7 @@ public class WebTaskApplication {
     private TaskRepo taskRepo;
 
     @Bean
-    @Profile("Test")
+    @Profile("!Test")
     public CommandLineRunner runner() {
         return (args) -> {
 
